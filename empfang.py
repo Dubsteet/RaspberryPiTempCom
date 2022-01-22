@@ -27,27 +27,29 @@ def readMaxID() :
     jason = req.json()
     return jason["totalentrycount"]
 try:
+    id = -1
     while True :
-        id = readMaxID()
-        temp = readTempFromServer(id)
-        print(temp)
-        #Je nach Temperatur werden die LED geschaltet
-        if (temp < 20) :
-            print('GREEN')
-            GPIO.output(RED_PIN, GPIO.LOW)
-            GPIO.output(YELLOW_PIN, GPIO.LOW)
-            GPIO.output(GREEN_PIN, GPIO.HIGH)
-        elif (temp < 23) :
-            print('YELLOW')
-            GPIO.output(RED_PIN, GPIO.LOW)
-            GPIO.output(YELLOW_PIN, GPIO.HIGH)
-            GPIO.output(GREEN_PIN, GPIO.LOW)
-        else :
-            print ('RED')
-            GPIO.output(RED_PIN, GPIO.HIGH)
-            GPIO.output(YELLOW_PIN, GPIO.LOW)
-            GPIO.output(GREEN_PIN, GPIO.LOW)
-        time.sleep(10)
+        newId = readMaxID()
+        if (newId > id) :
+            id = newId
+            temp = readTempFromServer(id)
+            print(temp)
+            #Je nach Temperatur werden die LED geschaltet
+            if (temp < 20) :
+                print('GREEN')
+                GPIO.output(RED_PIN, GPIO.LOW)
+                GPIO.output(YELLOW_PIN, GPIO.LOW)
+                GPIO.output(GREEN_PIN, GPIO.HIGH)
+            elif (temp < 23) :
+                print('YELLOW')
+                GPIO.output(RED_PIN, GPIO.LOW)
+                GPIO.output(YELLOW_PIN, GPIO.HIGH)
+                GPIO.output(GREEN_PIN, GPIO.LOW)
+            else :
+                print ('RED')
+                GPIO.output(RED_PIN, GPIO.HIGH)
+                GPIO.output(YELLOW_PIN, GPIO.LOW)
+                GPIO.output(GREEN_PIN, GPIO.LOW)
 except KeyboardInterrupt:
     # Programm wird beendet wenn STRG+C gedrückt wird.
     print('Temperaturmessung wird beendet')

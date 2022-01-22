@@ -35,7 +35,6 @@ try:
         #Post Request auf den Webserver
         r = requests.post('http://' + REQ_URL + '?temp='+ temp +'&room=' + ROOM)
         print(r.status_code, r.reason)
-        time.sleep(10)
 except KeyboardInterrupt:
     #Programm wird beendet wenn STRG+C gedrückt wird.
     print('Temperaturmessung wird beendet')
